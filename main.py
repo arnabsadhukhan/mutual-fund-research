@@ -138,12 +138,12 @@ if uploaded_file:
 
         # st.write(invested_amount,units_hold,current_nav)
         for amount in range(1000, 20_000, 2000):
-            new_avg_nav = calc_returns_on_today_invest(invested_amount,current_nav,units_hold,amount)[3]
+            new_returns, _, _, new_avg_nav = calc_returns_on_today_invest(invested_amount,current_nav,units_hold,amount)
             fig.add_trace(go.Scatter(
                 x=[min(mf_history_nav_df['date']), max(mf_history_nav_df['date'])],
                 y=[new_avg_nav, new_avg_nav],
                 mode='lines',
-                name='New Avg Nav - If Invest '+ str(amount)+' Rs' ,
+                name='New Avg Nav - If Invest '+ str(amount)+'₹ - '+str(round(new_returns, 2))+'%',
                 line=dict(color='green' if new_avg_nav<avg_nav else 'red', dash='dash')
             ))
         fig.update_layout(
