@@ -1,0 +1,8 @@
+pandas
+numpy
+plotly
+matplotlib
+streamlit
+mftool
+openpyxl
+protobuf==3.20.*
