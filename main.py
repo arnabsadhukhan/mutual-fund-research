@@ -87,7 +87,7 @@ if uploaded_file:
         else:
             scheme_code_mapping[most_matched_original] = code
             transaction_df['Scheme Name'] = transaction_df['Scheme Name'].str.replace(sn, most_matched_original)
-    print(transaction_df)
+    # print(transaction_df)
             
     # start_date = st.sidebar.date_input("Select Start Date", pd.Timestamp("2024-01-01"))
     for mutual_fund_name in scheme_code_mapping.keys():
@@ -116,7 +116,7 @@ if uploaded_file:
             elif row['Transaction Type'] == 'REDEEM':
                 invested_amount -= row['Amount']
                 units_hold -= row['Units']
-        print("Current working",mutual_fund_name)
+        # print("Current working",mutual_fund_name)
         avg_nav_on_every_transaction_df = pd.DataFrame(avg_nav_on_every_transaction)
         current_nav = mf_history_nav_df.tail(1)['nav'].values[0]
         if(units_hold!=0):
@@ -129,7 +129,7 @@ if uploaded_file:
         fig.add_trace(go.Scatter(x=mf_history_nav_df['date'],
                                  y=mf_history_nav_df['nav'], mode='lines', name=mutual_fund_name))
         fig.add_trace(go.Scatter(x=transaction_data['Date'], y=transaction_data['NAV'],
-                                 mode='markers', name=f"{mutual_fund_name} - Transactions", marker=dict(color='red')))
+                                 mode='markers', name=f"Transactions", marker=dict(color='red')))
         fig.add_trace(go.Scatter(x=[min(mf_history_nav_df['date']), max(mf_history_nav_df['date'])], y=[
                       current_nav, current_nav], mode='lines', name='Current NAV', line=dict(color='orange', dash='dash')))
         fig.add_trace(go.Scatter(x=[min(mf_history_nav_df['date']), max(mf_history_nav_df['date'])], y=[
@@ -145,7 +145,16 @@ if uploaded_file:
                 name='New Avg Nav - If Invest '+ str(amount)+' Rs' ,
                 line=dict(color='green' if new_avg_nav<avg_nav else 'red', dash='dash')
             ))
-        
+        fig.update_layout(
+            legend=dict(
+                orientation="h",   # Horizontal legend
+                yanchor="bottom",  # Anchor the legend to the bottom of the map
+                y=1.1,             # Place the legend above the map
+                xanchor="center",  # Center the legend horizontally
+                x=0.5              # Center the legend horizontally
+            )
+        )
+
         st.plotly_chart(fig)
         st.write("Invested Amount:", invested_amount)
         st.write("Units Hold:", units_hold)
