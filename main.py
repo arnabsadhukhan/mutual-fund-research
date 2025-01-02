@@ -51,8 +51,6 @@ st.sidebar.title("Settings")
 
 uploaded_file = st.sidebar.file_uploader("Upload Mutual Fund Transactions (Excel)", type=["xlsx"])
 
-st.title("Date Input Example")
-
 # Date input
 start_date = st.sidebar.date_input("Pick a date:",
     value=datetime(2024, 1, 1).date(),  # Default value is today's date
@@ -67,7 +65,7 @@ start_date = st.sidebar.date_input("Pick a date:",
 # )
 
 # Display the selected date
-st.write("You selected:", start_date)
+st.write("You selected date:", start_date)
 
 if uploaded_file:
     st.success("File uploaded successfully!")
