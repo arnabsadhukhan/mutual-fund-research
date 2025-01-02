@@ -71,7 +71,10 @@ if uploaded_file:
     st.success("File uploaded successfully!")
     transaction_df = pd.read_excel(uploaded_file)
     transaction_df['Date'] = pd.to_datetime(transaction_df['Date'], errors='coerce')
-    transaction_df['Amount'] = transaction_df['Amount'].str.replace(',', '').astype(float)
+    try:
+        transaction_df['Amount'] = transaction_df['Amount'].str.replace(',', '').astype(float)
+    except:
+        pass
 
     mf = Mftool()
 
